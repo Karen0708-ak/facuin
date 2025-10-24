@@ -1,0 +1,115 @@
+{% extends "./plantilla.html" %}
+
+{% block titulo %}
+<h1 class="display-1 text-secondary text-center mb-0">New Faculty</h1>
+{% endblock %}
+
+{% block contenido %}
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6 bg-light p-4 rounded">
+
+    <form action="{% url 'saveFaculty' %}" id="frm_newFaculty" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <label for="name">Name:</label><br>
+      <input class="form-control" type="text" name="name" id="name" placeholder="Enter faculty name">
+      <br>
+
+      <label for="acronym">Acronym:</label><br>
+      <input class="form-control" type="text" name="acronym" id="acronym" placeholder="Enter acronym">
+      <br>
+
+      <label for="dean_name">Dean name:</label><br>
+      <input class="form-control" type="text" name="dean_name" id="dean_name" placeholder="Enter dean name">
+      <br>
+
+      <label for="phone">Phone:</label><br>
+      <input class="form-control" type="text" name="phone" id="phone" placeholder="Enter phone number">
+      <br>
+
+      <label for="email">Email:</label><br>
+      <input class="form-control" type="email" name="email" id="email" placeholder="Enter email address">
+      <br>
+
+      <label for="year_foundation">Year of foundation:</label><br>
+      <input class="form-control" type="number" name="year_foundation" id="year_foundation" placeholder="Enter foundation year">
+      <br>
+
+      <button class="btn btn-success form-control" type="submit">Save</button>
+      <a href="/" class="btn btn-outline-danger mt-2">Cancel</a>
+    </form>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+<script>
+  $("#frm_newFaculty").validate({
+    rules: {
+      "name": {
+        required: true,
+        minlength: 3,
+        maxlength: 100
+      },
+      "acronym": {
+        required: true,
+        minlength: 2,
+        maxlength: 100
+      },
+      "dean_name": {
+        required: true,
+        minlength: 3,
+        maxlength: 100
+      },
+      "phone": {
+        required: true,
+        minlength: 7,
+        maxlength: 20
+      },
+      "email": {
+        required: true,
+        email: true
+      },
+      "year_foundation": {
+        required: true,
+        digits: true,
+        minlength: 4,
+        maxlength: 4
+      }
+    },
+    messages: {
+      "name": {
+        required: "The name is required",
+        minlength: "Must be at least 3 characters",
+        maxlength: "Cannot exceed 100 characters"
+      },
+      "acronym": {
+        required: "The acronym is required",
+        minlength: "Must be at least 2 characters",
+        maxlength: "Cannot exceed 100 characters"
+      },
+      "dean_name": {
+        required: "The dean name is required",
+        minlength: "Must be at least 3 characters",
+        maxlength: "Cannot exceed 100 characters"
+      },
+      "phone": {
+        required: "The phone number is required",
+        minlength: "Must be at least 7 digits",
+        maxlength: "Cannot exceed 20 digits"
+      },
+      "email": {
+        required: "The email is required",
+        email: "Enter a valid email address"
+      },
+      "year_foundation": {
+        required: "The foundation year is required",
+        digits: "Only numbers are allowed",
+        minlength: "Must be 4 digits",
+        maxlength: "Must be 4 digits"
+      }
+    }
+  });
+</script>
+
+{% endblock %}
