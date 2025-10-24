@@ -1,78 +1,109 @@
-{% extends "plantilla.html" %}
-
+{% extends "./plantilla.html" %}
 {% block titulo %}
 <h1 class="display-1 text-secondary text-center mb-0">New Teacher</h1>
 {% endblock %}
-
 {% block contenido %}
 <div class="row">
-  <div class="col-md-3"></div>
-  <div class="col-md-6 bg-light p-4 rounded">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg-light p-4 rounded">
 
-    <form action="{% url 'saveTeacher' %}" id="frm_newTeacher" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
+        <form action="{% url 'saveTeacher' %}" id="frm_newTeacher" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
-      <label for="first_name">First name:</label>
-      <input class="form-control" type="text" name="first_name" id="first_name" placeholder="Enter first name">
-      <br>
+            <label for="first_name">First name:</label><br>
+            <input class="form-control" type="text" name="first_name" id="first_name" placeholder="Enter first name">
+            <br>
 
-      <label for="last_name">Last name:</label>
-      <input class="form-control" type="text" name="last_name" id="last_name" placeholder="Enter last name">
-      <br>
+            <label for="last_name">Last name:</label><br>
+            <input class="form-control" type="text" name="last_name" id="last_name" placeholder="Enter last name">
+            <br>
 
-      <label for="email">Email:</label>
-      <input class="form-control" type="email" name="email" id="email" placeholder="Enter email (optional)">
-      <br>
+            <label for="email">Email:</label><br>
+            <input class="form-control" type="email" name="email" id="email" placeholder="Enter email (optional)">
+            <br>
 
-      <label for="phone">Phone:</label>
-      <input class="form-control" type="text" name="phone" id="phone" placeholder="Enter phone (optional)">
-      <br>
+            <label for="phone">Phone:</label><br>
+            <input class="form-control" type="text" name="phone" id="phone" placeholder="Enter phone number (optional)">
+            <br>
 
-      <label for="career">Career:</label>
-      <select class="form-control" name="career" id="career">
-        <option value="">-- Select career (optional) --</option>
-        {% for c in careers %}
-          <option value="{{ c.id_career }}">{{ c.career_name }}</option>
-        {% endfor %}
-      </select>
-      <br>
+            <label for="career">Career:</label><br>
+            <select class="form-control" name="career" id="career">
+                <option value="">-- Select career (optional) --</option>
+                {% for c in careers %}
+                    <option value="{{ c.id_career }}">{{ c.career_name }}</option>
+                {% endfor %}
+            </select>
+            <br>
 
-      <label for="specialty">Specialty:</label>
-      <input class="form-control" type="text" name="specialty" id="specialty" placeholder="Enter specialty (optional)">
-      <br>
+            <label for="specialty">Specialty:</label><br>
+            <input class="form-control" type="text" name="specialty" id="specialty" placeholder="Enter specialty (optional)">
+            <br>
 
-      <label for="academic_degree">Academic degree:</label>
-      <input class="form-control" type="text" name="academic_degree" id="academic_degree" placeholder="Enter degree (optional)">
-      <br>
+            <label for="academic_degree">Academic degree:</label><br>
+            <input class="form-control" type="text" name="academic_degree" id="academic_degree" placeholder="Enter academic degree (optional)">
+            <br>
 
-      <label for="photo">Photo:</label>
-      <input id="photo" class="form-control" type="file" name="photo" accept="image/*"><br>
+            <label for="photo">Photo:</label><br>
+            <input id="photo" class="form-control" type="file" name="photo" accept="image/*"><br>
 
-      <button class="btn btn-success form-control" type="submit">Save</button>
-      <a href="{% url 'inicioTeacher' %}" class="btn btn-outline-danger mt-2">Cancel</a>
-    </form>
-  </div>
-  <div class="col-md-3"></div>
+            <button class="btn btn-success form-control" type="submit">Save</button>
+            <a href="{% url 'inicioTeacher' %}" class="btn btn-outline-danger mt-2">Cancel</a>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
 </div>
 
 <script>
-  $("#frm_newTeacher").validate({
-    rules: {
-      "first_name": { required: true, minlength: 2, maxlength: 50 },
-      "last_name":  { required: true, minlength: 2, maxlength: 50 },
-      "email":      { email: true },
-      "phone":      { minlength: 7, maxlength: 20 }
-    },
-    messages: {
-      "first_name": { required: "First name is required", minlength: "At least 2 characters", maxlength: "Cannot exceed 50 characters" },
-      "last_name":  { required: "Last name is required",  minlength: "At least 2 characters", maxlength: "Cannot exceed 50 characters" },
-      "email":      { email: "Enter a valid email address" },
-      "phone":      { minlength: "At least 7 digits", maxlength: "Cannot exceed 20 digits" }
-    },
-    errorClass: "error"
-  });
-
-  // (opcional) inicializar fileinput si lo usas:
-  // $("#photo").fileinput({ showCaption:false, allowedFileExtensions: ["png","jpg","jpeg"] });
+    $("#frm_newTeacher").validate({
+        rules: {
+            "first_name": {
+                required: true,
+                minlength: 2,
+                maxlength: 50
+            },
+            "last_name": {
+                required: true,
+                minlength: 2,
+                maxlength: 50
+            },
+            "email": {
+                email: true
+            },
+            "phone": {
+                minlength: 7,
+                maxlength: 20
+            }
+        },
+        messages: {
+            "first_name": {
+                required: "First name is required",
+                minlength: "At least 2 characters",
+                maxlength: "Cannot exceed 50 characters"
+            },
+            "last_name": {
+                required: "Last name is required",
+                minlength: "At least 2 characters",
+                maxlength: "Cannot exceed 50 characters"
+            },
+            "email": {
+                email: "Enter a valid email address"
+            },
+            "phone": {
+                minlength: "At least 7 digits",
+                maxlength: "Cannot exceed 20 digits"
+            }
+        }
+    });
 </script>
+
+<script>
+    $("#photo").fileinput({
+        language: "es",
+        allowedFileExtensions: ["png", "jpg", "jpeg"],
+        showCaption: false,
+        dropZoneEnabled: true,
+        showClose: false
+    });
+</script>
+
 {% endblock %}
