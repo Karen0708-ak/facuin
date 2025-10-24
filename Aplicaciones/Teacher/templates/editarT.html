@@ -1,0 +1,87 @@
+{% extends "plantilla.html" %}
+
+{% block titulo %}
+<h1 class="display-1 text-secondary text-center mb-0">Edit Teacher</h1>
+{% endblock %}
+
+{% block contenido %}
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6 bg-light p-4 rounded">
+
+    <form action="{% url 'processEditTeacher' %}" method="post" enctype="multipart/form-data" id="formEditTeacher">
+      {% csrf_token %}
+
+      <input type="hidden" name="professor_id" value="{{ teacher.professor_id }}">
+
+      <label for="first_name">First name:</label>
+      <input class="form-control" type="text" name="first_name" id="first_name" value="{{ teacher.first_name }}">
+      <br>
+
+      <label for="last_name">Last name:</label>
+      <input class="form-control" type="text" name="last_name" id="last_name" value="{{ teacher.last_name }}">
+      <br>
+
+      <label for="email">Email:</label>
+      <input class="form-control" type="email" name="email" id="email" value="{{ teacher.email }}">
+      <br>
+
+      <label for="phone">Phone:</label>
+      <input class="form-control" type="text" name="phone" id="phone" value="{{ teacher.phone }}">
+      <br>
+
+      <label for="career">Career:</label>
+      <select class="form-control" name="career" id="career">
+        <option value="">-- Select career (optional) --</option>
+        {% for c in careers %}
+          <option value="{{ c.id_career }}" {% if teacher.career and teacher.career.id_career == c.id_career %}selected{% endif %}>
+            {{ c.career_name }}
+          </option>
+        {% endfor %}
+      </select>
+      <br>
+
+      <label for="specialty">Specialty:</label>
+      <input class="form-control" type="text" name="specialty" id="specialty" value="{{ teacher.specialty }}">
+      <br>
+
+      <label for="academic_degree">Academic degree:</label>
+      <input class="form-control" type="text" name="academic_degree" id="academic_degree" value="{{ teacher.academic_degree }}">
+      <br>
+
+      <label for="photo">Photo:</label><br>
+      {% if teacher.photo %}
+        <img src="{{ teacher.photo.url }}" alt="Current photo" width="120"><br><br>
+      {% else %}
+        <small>No photo uploaded</small><br><br>
+      {% endif %}
+      <input id="photo" class="form-control" type="file" name="photo" accept="image/*">
+      <br>
+
+      <button class="btn btn-success w-100" type="submit">Update</button>
+      <br><br>
+      <a href="{% url 'inicioTeacher' %}" class="btn btn-outline-danger w-100">Cancel</a>
+    </form>
+
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+<script>
+  $("#formEditTeacher").validate({
+    rules: {
+      "first_name": { required: true, minlength: 2, maxlength: 50 },
+      "last_name":  { required: true, minlength: 2, maxlength: 50 },
+      "email":      { email: true },
+      "phone":      { minlength: 7, maxlength: 20 }
+    },
+    messages: {
+      "first_name": { required: "First name is required", minlength: "At least 2 characters", maxlength: "Cannot exceed 50 characters" },
+      "last_name":  { required: "Last name is required",  minlength: "At least 2 characters", maxlength: "Cannot exceed 50 characters" },
+      "email":      { email: "Enter a valid email address" },
+      "phone":      { minlength: "At least 7 digits", maxlength: "Cannot exceed 20 digits" }
+    },
+    errorClass: "error"
+  });
+</script>
+{% endblock %}
