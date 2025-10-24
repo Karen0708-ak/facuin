@@ -1,0 +1,113 @@
+{% extends "plantilla.html" %}
+
+{% block titulo %}
+<h1 class="display-1 text-secondary text-center mb-0">Edit Career</h1>
+{% endblock %}
+
+{% block contenido %}
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6 bg-light p-4 rounded">
+
+    <form action="{% url 'processEditCareer' %}" method="post" id="formEditCareer">
+      {% csrf_token %}
+
+      <!-- Hidden ID -->
+      <input type="hidden" name="id_career" value="{{ career.id_career }}">
+
+      <label for="career_name">Career name:</label>
+      <input class="form-control" type="text" name="career_name" id="career_name" value="{{ career.career_name }}">
+      <br>
+
+      <label for="duration">Duration:</label>
+      <input class="form-control" type="text" name="duration" id="duration" value="{{ career.duration }}" placeholder="e.g., 4 years / 8 semesters">
+      <br>
+
+      <label for="faculty">Faculty:</label>
+      <select class="form-control" name="faculty" id="faculty">
+        <option value="">-- Select faculty --</option>
+        {% for f in faculties %}
+          <option value="{{ f.id }}" {% if career.faculty.id == f.id %}selected{% endif %}>
+            {{ f.name }} ({{ f.acronym }})
+          </option>
+        {% endfor %}
+      </select>
+      <br>
+
+      <label for="career_code">Code:</label>
+      <input class="form-control" type="text" name="career_code" id="career_code" value="{{ career.career_code }}">
+      <br>
+
+      <label for="description">Description:</label>
+      <textarea class="form-control" name="description" id="description" rows="4">{{ career.description }}</textarea>
+      <br>
+
+      <label for="modality">Modality:</label>
+      <input class="form-control" type="text" name="modality" id="modality" value="{{ career.modality }}" placeholder="e.g., On-site / Online / Hybrid">
+      <br>
+
+      <button class="btn btn-success w-100" type="submit">Update</button>
+      <br><br>
+      <a href="{% url 'inicioCareer' %}" class="btn btn-outline-danger w-100">Cancel</a>
+    </form>
+
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+<script>
+  $("#formEditCareer").validate({
+    rules: {
+      "career_name": {
+        required: true,
+        minlength: 3,
+        maxlength: 100
+      },
+      "duration": {
+        minlength: 2,
+        maxlength: 20
+      },
+      "faculty": {
+        required: true
+      },
+      "career_code": {
+        minlength: 2,
+        maxlength: 20
+      },
+      "description": {
+        minlength: 5
+      },
+      "modality": {
+        minlength: 2,
+        maxlength: 50
+      }
+    },
+    messages: {
+      "career_name": {
+        required: "The career name is required",
+        minlength: "Must be at least 3 characters",
+        maxlength: "Cannot exceed 100 characters"
+      },
+      "duration": {
+        minlength: "Must be at least 2 characters",
+        maxlength: "Cannot exceed 20 characters"
+      },
+      "faculty": {
+        required: "Please select a faculty"
+      },
+      "career_code": {
+        minlength: "Must be at least 2 characters",
+        maxlength: "Cannot exceed 20 characters"
+      },
+      "description": {
+        minlength: "Must be at least 5 characters"
+      },
+      "modality": {
+        minlength: "Must be at least 2 characters",
+        maxlength: "Cannot exceed 50 characters"
+      }
+    },
+    errorClass: "error"
+  });
+</script>
+{% endblock %}

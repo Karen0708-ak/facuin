@@ -1,0 +1,107 @@
+{% extends "plantilla.html" %}
+
+{% block titulo %}
+<h1 class="display-1 text-secondary text-center mb-0">New Career</h1>
+{% endblock %}
+
+{% block contenido %}
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6 bg-light p-4 rounded">
+
+    <form action="{% url 'saveCareer' %}" id="frm_newCareer" method="post">
+      {% csrf_token %}
+
+      <label for="career_name">Career name:</label><br>
+      <input class="form-control" type="text" name="career_name" id="career_name" placeholder="Enter career name">
+      <br>
+
+      <label for="duration">Duration:</label><br>
+      <input class="form-control" type="text" name="duration" id="duration" placeholder="e.g., 4 years / 8 semesters">
+      <br>
+
+      <label for="faculty">Faculty:</label><br>
+      <select class="form-control" name="faculty" id="faculty">
+        <option value="">-- Select faculty --</option>
+        {% for f in faculties %}
+          <option value="{{ f.id }}">{{ f.name }} ({{ f.acronym }})</option>
+        {% endfor %}
+      </select>
+      <br>
+
+      <label for="career_code">Code:</label><br>
+      <input class="form-control" type="text" name="career_code" id="career_code" placeholder="Enter career code">
+      <br>
+
+      <label for="description">Description:</label><br>
+      <textarea class="form-control" name="description" id="description" rows="4" placeholder="Enter a short description"></textarea>
+      <br>
+
+      <label for="modality">Modality:</label><br>
+      <input class="form-control" type="text" name="modality" id="modality" placeholder="e.g., On-site / Online / Hybrid">
+      <br>
+
+      <button class="btn btn-success form-control" type="submit">Save</button>
+      <a href="{% url 'inicioCareer' %}" class="btn btn-outline-danger mt-2">Cancel</a>
+    </form>
+
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+<script>
+  $("#frm_newCareer").validate({
+    rules: {
+      "career_name": {
+        required: true,
+        minlength: 3,
+        maxlength: 100
+      },
+      "duration": {
+        minlength: 2,
+        maxlength: 20
+      },
+      "faculty": {
+        required: true
+      },
+      "career_code": {
+        minlength: 2,
+        maxlength: 20
+      },
+      "description": {
+        minlength: 5
+      },
+      "modality": {
+        minlength: 2,
+        maxlength: 50
+      }
+    },
+    messages: {
+      "career_name": {
+        required: "The career name is required",
+        minlength: "Must be at least 3 characters",
+        maxlength: "Cannot exceed 100 characters"
+      },
+      "duration": {
+        minlength: "Must be at least 2 characters",
+        maxlength: "Cannot exceed 20 characters"
+      },
+      "faculty": {
+        required: "Please select a faculty"
+      },
+      "career_code": {
+        minlength: "Must be at least 2 characters",
+        maxlength: "Cannot exceed 20 characters"
+      },
+      "description": {
+        minlength: "Must be at least 5 characters"
+      },
+      "modality": {
+        minlength: "Must be at least 2 characters",
+        maxlength: "Cannot exceed 50 characters"
+      }
+    },
+    errorClass: "error"
+  });
+</script>
+{% endblock %}

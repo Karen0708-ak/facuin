@@ -6,6 +6,7 @@ class Teacher(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(null=True, blank=True)
+    photo = models.ImageField(upload_to='teachers/', null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
     career = models.ForeignKey(
         Career,
