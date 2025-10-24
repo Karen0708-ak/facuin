@@ -15,10 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
+from Aplicaciones.Faculty import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('faculty/', include('Aplicaciones.Faculty.urls')),
 
+    # esto hace que al abrir 127.0.0.1:8000/ se cargue tu vista directamente
+    path('', views.inicioFaculty, name='home'),
+
+    # y este include maneja las demás rutas de Faculty
+    path('Faculty/', include('Aplicaciones.Faculty.urls')),
 ]
