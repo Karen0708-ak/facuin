@@ -27,5 +27,7 @@ urlpatterns = [
     # y este include maneja las demás rutas de Faculty
     path('Faculty/', include('Aplicaciones.Faculty.urls')),
     path('Career/', include('Aplicaciones.Career.urls')),
+    path('Teacher/', include('Aplicaciones.Teacher.urls')),
+
 
 ]
